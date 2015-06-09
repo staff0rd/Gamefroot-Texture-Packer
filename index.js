@@ -16,7 +16,8 @@ var FORMATS = {
   'sparrow': {template: 'starling.template', extension: 'xml', trim: true},
   'easel.js': {template: 'easeljs.template', extension: 'json', trim: false},
   'cocos2d': {template: 'cocos2d.template', extension: 'plist', trim: false},
-  'css': {template: 'css.template', extension: 'css', trim: false}
+  'css': {template: 'css.template', extension: 'css', trim: false},
+  'kiwi': {template: 'kiwi.template', extension: 'json', trim: false}
 };
 
 if (!module.parent) {
@@ -108,7 +109,7 @@ if (!module.parent) {
  * @param {string} files pattern of files images files
  * @param {string[]} files paths to image files
  * @param {object} options
- * @param {string} options.format format of spritesheet (starling, sparrow, json, pixi.js, easel.js, cocos2d)
+ * @param {string} options.format format of spritesheet (starling, sparrow, json, pixi.js, easel.js, cocos2d, kiwi)
  * @param {string} options.customFormat external format template
  * @param {string} options.name name of the generated spritesheet
  * @param {string} options.path path to the generated spritesheet
