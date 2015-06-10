@@ -178,10 +178,22 @@ function generate(files, options, callback) {
       generator.determineCanvasSize(files, options, callback);
     },
     function (options, callback) {
-      generator.generateImage(files, options, callback);
+      var n = 0;
+      var baseName = options.name;
+      async.each(files, function(fileGroup, done){
+        options.name = baseName + '-' + (++n); 
+        generator.generateImage(fileGroup, options, done);
+      }, callback);
+      options.name = baseName;
     },
     function (callback) {
-      generator.generateData(files, options, callback);
+      var n = 0;
+      var baseName = options.name;
+      async.each(files, function(fileGroup, done){
+        options.name = baseName + '-' + (++n); 
+        generator.generateData(fileGroup, options, callback);
+      }, callback);
+      options.name = baseName;
     }
   ],
     callback);
