@@ -91,6 +91,10 @@ if (!module.parent) {
       describe: 'Sort method: maxside (default), area, width or height',
       default: 'maxside'
     })
+    .options('maxGroups', {
+      describe: 'maximum number of texture groups that will be outputted, a value < 0 indicates no limit',
+      default: -1
+    })
     .demand(1)
     .argv;
 
@@ -146,6 +150,7 @@ function generate(files, options, callback) {
   options.sort = options.hasOwnProperty('sort') ? options.sort : 'maxside';
   options.padding = options.hasOwnProperty('padding') ? parseInt(options.padding, 10) : 0;
   options.prefix = options.hasOwnProperty('prefix') ? options.prefix : '';
+  options.maxGroups = options.hasOwnProperty('maxGroups') ? options.maxGroups : -1;
 
   files = files.map(function (item, index) {
     var resolvedItem = path.resolve(item);
