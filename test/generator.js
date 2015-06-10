@@ -74,7 +74,7 @@ describe('generator', function () {
     });
 
     it('should create limit texture groups', function (done) {
-      var options = {square: false, powerOfTwo: false, width:500, height:500, maxGroups:1};
+      var options = {square: false, powerOfTwo: false, width:500, height:500, maxAtlases:1};
       generator.determineCanvasSize(FILES, options, function (err) {
         expect(err).toBe(null);
         expect(options.atlases.length).toEqual(1);
