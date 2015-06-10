@@ -3,7 +3,7 @@
 rm -R example
 mkdir -p example
 
-node index.js -p example/kiwi -f kiwi --width 2048 --height 2048 --maxGroups 2 assets/*.png
+node index.js -p example/kiwi -f kiwi --algorithm binpacking --width 678 --height 123 assets/*.png --square --powerOfTwo
 
 # node index.js -p example/json -f json --trim --padding 10 assets/*.png
 # node index.js -p example/json_50% -f json --trim --padding 10 --scale 50% assets/*.png
