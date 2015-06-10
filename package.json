@@ -1,6 +1,6 @@
 {
   "name": "gamefroot-texture-packer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tool for generating high quality texture atlases from a list of input files, backed by gamefroot.com and kiwi.js.",
   "main": "index.js",
   "directories": {
