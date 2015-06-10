@@ -1,5 +1,6 @@
 #!/bin/bash
 
+rm -R example
 mkdir -p example
 
 node index.js -p example/kiwi -f kiwi assets/*.png
