@@ -3,7 +3,7 @@
 rm -R example
 mkdir -p example
 
-node index.js -p example/kiwi -f kiwi --algorithm vertical --width 512 --height 512 assets/*.png
+node index.js -p example/kiwi -f kiwi --algorithm horizontal --width 512 assets/*.png
 
 # node index.js -p example/json -f json --trim --padding 10 assets/*.png
 # node index.js -p example/json_50% -f json --trim --padding 10 --scale 50% assets/*.png
