@@ -184,21 +184,33 @@ function generate(files, options, callback) {
     },
     function (options, callback) {
       var n = 0;
+      var ow = options.width;
+      var oh = options.height;
       var baseName = options.name;
       async.each(options.groups, function(group, done){
-        options.name = baseName + '-' + (++n); 
+        options.name = baseName + '-' + (++n);
+        options.width = group.width;
+        options.height = group.height;
         generator.generateImage(group.files, options, done);
       }, callback);
       options.name = baseName;
+      options.width = ow;
+      options.height = oh;
     },
     function (callback) {
       var n = 0;
+      var ow = options.width;
+      var oh = options.height;
       var baseName = options.name;
       async.each(options.groups, function(group, done){
         options.name = baseName + '-' + (++n); 
+        options.width = group.width;
+        options.height = group.height;
         generator.generateData(group.files, options, done);
       }, callback);
       options.name = baseName;
+      options.width = ow;
+      options.height = oh;
     }
   ],
     callback);
