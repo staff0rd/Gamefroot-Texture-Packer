@@ -83,6 +83,26 @@ describe('generator', function () {
       });
     });
 
+    it('should group images together that have the same group specified', function(done){
+      var options = {width:500, height:500, group:['/fixtures/*']};
+      generator.determineCanvasSize(FILES, options, function (err){
+        expect(err).toBe(null);
+        // Because the files must be grouped together and can not 
+        expect(options.groups.length).toEqual(0);
+        expect(options.excludedFiles.length).toBeMoreThan(0);
+        done();
+      });
+    });
+
+    it('should should handle multiple groups specified', function(done){
+      var options = { group:['/fixtures/50x50.jpg','/fixtures/100x100.jpg','/fixtures/200x200.jpg','/fixtures/500x500.jpg'] };
+      generator.determineCanvasSize(FILES, options, function (err){
+        expect(err).toBe(null);
+        expect(options.groups.length).toEqual(4);
+        done();
+      });
+    });
+
     after(function(){
       try {
         for (var i = 1; i <= 4; i++) {
