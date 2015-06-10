@@ -95,6 +95,10 @@ if (!module.parent) {
       describe: 'maximum number of texture groups that will be outputted, a value < 0 indicates no limit',
       default: -1
     })
+    .options('gutter', {
+      describe: 'the number of pixels to bleed the image edge out beyound the image bounds to reduce join lines between assets. Gutter is added to padding value.',
+      default: 0
+    })
     .demand(1)
     .argv;
 
@@ -150,6 +154,7 @@ function generate(files, options, callback) {
   options.sort = options.hasOwnProperty('sort') ? options.sort : 'maxside';
   options.padding = options.hasOwnProperty('padding') ? parseInt(options.padding, 10) : 0;
   options.prefix = options.hasOwnProperty('prefix') ? options.prefix : '';
+  options.gutter = options.hasOwnProperty('gutter') ? parseInt(options.gutter, 10) : 0;
 
   files = files.map(function (item, index) {
     var resolvedItem = path.resolve(item);
