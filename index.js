@@ -185,18 +185,18 @@ function generate(files, options, callback) {
     function (options, callback) {
       var n = 0;
       var baseName = options.name;
-      async.each(files, function(fileGroup, done){
+      async.each(options.groups, function(group, done){
         options.name = baseName + '-' + (++n); 
-        generator.generateImage(fileGroup, options, done);
+        generator.generateImage(group.files, options, done);
       }, callback);
       options.name = baseName;
     },
     function (callback) {
       var n = 0;
       var baseName = options.name;
-      async.each(files, function(fileGroup, done){
+      async.each(options.groups, function(group, done){
         options.name = baseName + '-' + (++n); 
-        generator.generateData(fileGroup, options, callback);
+        generator.generateData(group.files, options, done);
       }, callback);
       options.name = baseName;
     }
