@@ -45,8 +45,8 @@ describe('generator', function () {
       var options = {format:'kiwi', algorithm:'growing-binpacking', square: true, powerOfTwo: false};
       generator.determineCanvasSize(FILES, options, function (err) {
         expect(err).toBe(null);
-        expect(options.groups.length).toEqual(1,"number of groups should be one");
-        expect(options.groups[0].width).toEqual(options.groups[0].height);
+        expect(options.atlases.length).toEqual(1,"number of groups should be one");
+        expect(options.atlases[0].width).toEqual(options.atlases[0].height);
 
         done();
       });
@@ -56,9 +56,9 @@ describe('generator', function () {
       var options = {square: false, powerOfTwo: true};
       generator.determineCanvasSize(FILES, options, function (err) {
         expect(err).toBe(null);
-        expect(options.groups.length).toEqual(1, "number of groups should be one");
-        expect(options.groups[0].width).toEqual(1024);
-        expect(options.groups[0].height).toEqual(512);
+        expect(options.atlases.length).toEqual(1, "number of groups should be one");
+        expect(options.atlases[0].width).toEqual(1024);
+        expect(options.atlases[0].height).toEqual(512);
         done();
       });
     });
@@ -67,7 +67,7 @@ describe('generator', function () {
       var options = {square: false, powerOfTwo: false, width:500, height:500};
       generator.determineCanvasSize(FILES, options, function (err) {
         expect(err).toBe(null);
-        expect(options.groups.length).toBeMoreThan(1);
+        expect(options.atlases.length).toBeMoreThan(1);
         // TODO check json and image created for each group
         done();
       });
@@ -77,7 +77,7 @@ describe('generator', function () {
       var options = {square: false, powerOfTwo: false, width:500, height:500, maxGroups:1};
       generator.determineCanvasSize(FILES, options, function (err) {
         expect(err).toBe(null);
-        expect(options.groups.length).toEqual(1);
+        expect(options.atlases.length).toEqual(1);
         expect(options.excludedFiles.length).toBeMoreThan(0);
         done();
       });
@@ -88,7 +88,7 @@ describe('generator', function () {
       generator.determineCanvasSize(FILES, options, function (err){
         expect(err).toBe(null);
         // Because the files must be grouped together and can not 
-        expect(options.groups.length).toEqual(0);
+        expect(options.atlases.length).toEqual(0);
         expect(options.excludedFiles.length).toBeMoreThan(0);
         done();
       });
@@ -98,7 +98,7 @@ describe('generator', function () {
       var options = { group:['/fixtures/50x50.jpg','/fixtures/100x100.jpg','/fixtures/200x200.jpg','/fixtures/500x500.jpg'] };
       generator.determineCanvasSize(FILES, options, function (err){
         expect(err).toBe(null);
-        expect(options.groups.length).toEqual(4);
+        expect(options.atlases.length).toEqual(4);
         done();
       });
     });

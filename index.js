@@ -101,8 +101,8 @@ if (!module.parent) {
       describe: 'Sort method: maxside (default), area, width or height',
       default: 'maxside'
     })
-    .options('maxGroups', {
-      describe: 'maximum number of texture groups that will be outputted',
+    .options('maxAtlases', {
+      describe: 'maximum number of texture atlases that will be outputted',
       default: 0
     })
     .options('gutter', {
@@ -141,7 +141,7 @@ if (!module.parent) {
  * @param {string} options.algorithm packing algorithm: growing-binpacking (default), binpacking (requires passing width and height options), vertical or horizontal
  * @param {number} options.padding padding between images in spritesheet
  * @param {string} options.sort Sort method: maxside (default), area, width, height or none
- * @param {number} options.maxGroups the maximum number of texture atlases that will be generated
+ * @param {number} options.maxAtlases the maximum number of texture atlases that will be generated
  * @param {number} options.gutter the amount to bleed the edges of images in spritesheet
  * @param {function} callback
  */
@@ -168,6 +168,7 @@ function generate(files, options, callback) {
   options.sort = options.hasOwnProperty('sort') ? options.sort : 'maxside';
   options.padding = options.hasOwnProperty('padding') ? parseInt(options.padding, 10) : 0;
   options.prefix = options.hasOwnProperty('prefix') ? options.prefix : '';
+  options.maxAtlases = options.hasOwnProperty('maxAtlases') ? options.maxAtlases : 0;
   options.gutter = options.hasOwnProperty('gutter') ? parseInt(options.gutter, 10) : 0;
 
   files = files.map(function (item, index) {
@@ -205,11 +206,11 @@ function generate(files, options, callback) {
       var ow = options.width;
       var oh = options.height;
       var baseName = options.name;
-      async.each(options.groups, function(group, done){
-        options.name = baseName + '-' + (++n);
-        options.width = group.width;
-        options.height = group.height;
-        generator.generateImage(group.files, options, done);
+      async.each(options.atlases, function(atlas, done){
+        options.name = atlas.name = baseName + '-' + (++n);
+        options.width = atlas.width;
+        options.height = atlas.height;
+        generator.generateImage(atlas.files, options, done);
       }, callback);
       options.name = baseName;
       options.width = ow;
@@ -220,11 +221,11 @@ function generate(files, options, callback) {
       var ow = options.width;
       var oh = options.height;
       var baseName = options.name;
-      async.each(options.groups, function(group, done){
+      async.each(options.atlases, function(atlas, done){
         options.name = baseName + '-' + (++n); 
-        options.width = group.width;
-        options.height = group.height;
-        generator.generateData(group.files, options, done);
+        options.width = atlas.width;
+        options.height = atlas.height;
+        generator.generateData(atlas.files, options, done);
       }, callback);
       options.name = baseName;
       options.width = ow;
