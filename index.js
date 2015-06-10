@@ -42,6 +42,16 @@ if (!module.parent) {
       describe: 'path to export directory',
       default: '.'
     })
+    .options('w', {
+      alias: 'width',
+      describe: 'The maximum width of the generated image(s), required for binpacking, optional for other algorithms',
+      default: 999999
+    })
+    .options('h', {
+      alias: 'height',
+      describe: 'The maximum height of the generated image(s), required for binpacking, optional for other algorithms',
+      default: 999999
+    })
     .options('fullpath', {
       describe: 'include path in file name',
       default: false,
@@ -80,7 +90,7 @@ if (!module.parent) {
       default: ''
     })
     .options('algorithm', {
-      describe: 'packing algorithm: growing-binpacking (default), binpacking (requires passing width and height options), vertical or horizontal',
+      describe: 'packing algorithm: growing-binpacking (default), binpacking (requires w and h options), vertical or horizontal',
       default: 'growing-binpacking'
     })
     .options('padding', {
@@ -92,11 +102,11 @@ if (!module.parent) {
       default: 'maxside'
     })
     .options('maxGroups', {
-      describe: 'maximum number of texture groups that will be outputted, a value < 0 indicates no limit',
-      default: -1
+      describe: 'maximum number of texture groups that will be outputted',
+      default: 0
     })
     .options('gutter', {
-      describe: 'the number of pixels to bleed the image edge out beyound the image bounds to reduce join lines between assets. Gutter is added to padding value.',
+      describe: 'the number of pixels to bleed the image edge, gutter is added to padding value.',
       default: 0
     })
     .demand(1)
@@ -121,14 +131,18 @@ if (!module.parent) {
  * @param {string} options.customFormat external format template
  * @param {string} options.name name of the generated spritesheet
  * @param {string} options.path path to the generated spritesheet
+ * @param {string} options.width maximum width of the generated image(s)
+ * @param {string} options.height maximum height of the generated image(s)
  * @param {string} options.prefix prefix for image paths (css format only)
  * @param {boolean} options.fullpath include path in file name
  * @param {boolean} options.trim removes transparent whitespaces around images
  * @param {boolean} options.square texture should be square
  * @param {boolean} options.powerOfTwo texture's size (both width and height) should be a power of two
  * @param {string} options.algorithm packing algorithm: growing-binpacking (default), binpacking (requires passing width and height options), vertical or horizontal
- * @param {boolean} options.padding padding between images in spritesheet
+ * @param {number} options.padding padding between images in spritesheet
  * @param {string} options.sort Sort method: maxside (default), area, width, height or none
+ * @param {number} options.maxGroups the maximum number of texture atlases that will be generated
+ * @param {number} options.gutter the amount to bleed the edges of images in spritesheet
  * @param {function} callback
  */
 function generate(files, options, callback) {
