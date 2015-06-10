@@ -24,7 +24,7 @@ if (!module.parent) {
   var argv = optimist.usage('Usage: $0 [options] <files>')
     .options('f', {
       alias: 'format',
-      describe: 'format of spritesheet (starling, sparrow, json, pixi.js, easel.js, cocos2d)',
+      describe: 'format of spritesheet (kiwi, starling, sparrow, json, pixi.js, easel.js, cocos2d)',
       default: ''
     })
     .options('cf', {
@@ -57,12 +57,12 @@ if (!module.parent) {
       boolean: true
     })
     .options('square', {
-      describe: 'texture should be s square',
+      describe: 'texture should be a square with dimensions max(width,height)',
       default: false,
       boolean: true
     })
     .options('powerOfTwo', {
-      describe: 'texture width and height should be power of two',
+      describe: 'texture width and height should be rounded up to the nearest power of two',
       default: false,
       boolean: true
     })
