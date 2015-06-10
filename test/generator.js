@@ -36,10 +36,10 @@ describe('generator', function () {
 
   describe('determineCanvasSize', function () {
     var FILES = [
-      {path: __dirname + '/fixtures/50x50.jpg', width: 50, height: 50},
-      {path: __dirname + '/fixtures/100x100.jpg', width: 100, height: 100},
+      {path: __dirname + '/fixtures/500x500.jpg', width: 500, height: 500},
       {path: __dirname + '/fixtures/200x200.jpg', width: 200, height: 200},
-      {path: __dirname + '/fixtures/500x500.jpg', width: 500, height: 500}
+      {path: __dirname + '/fixtures/100x100.jpg', width: 100, height: 100},
+      {path: __dirname + '/fixtures/50x50.jpg', width: 50, height: 50}
     ];
 
     it('should return square canvas', function (done) {
