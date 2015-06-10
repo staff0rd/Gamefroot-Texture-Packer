@@ -1,7 +1,6 @@
 var generator = require('../lib/generator');
-var expect = require('expect.js');
+var expect = require('expect');
 var fs = require('fs');
-
 
 describe('generator', function () {
 
@@ -15,19 +14,19 @@ describe('generator', function () {
       ];
 
       generator.getImagesSizes(FILES, {padding: 0}, function (err, files) {
-        expect(err).to.be(null);
+        expect(err).toBe(null);
 
-        expect(files[0].width).to.equal(50);
-        expect(files[0].height).to.equal(50);
+        expect(files[0].width).toEqual(50);
+        expect(files[0].height).toEqual(50);
 
-        expect(files[1].width).to.equal(100);
-        expect(files[1].height).to.equal(100);
+        expect(files[1].width).toEqual(100);
+        expect(files[1].height).toEqual(100);
 
-        expect(files[2].width).to.equal(200);
-        expect(files[2].height).to.equal(200);
+        expect(files[2].width).toEqual(200);
+        expect(files[2].height).toEqual(200);
 
-        expect(files[3].width).to.equal(500);
-        expect(files[3].height).to.equal(500);
+        expect(files[3].width).toEqual(500);
+        expect(files[3].height).toEqual(500);
 
         done();
       });
@@ -43,20 +42,12 @@ describe('generator', function () {
     ];
 
     it('should return square canvas', function (done) {
-      var options = {square: true, powerOfTwo: false};
+      var options = {format:'kiwi', algorithm:'growing-binpacking', square: true, powerOfTwo: false};
       generator.determineCanvasSize(FILES, options, function (err) {
-        expect(err).to.be(null);
-        expect(options.width).to.equal(options.height);
+        expect(err).toBe(null);
+        expect(options.groups.length).toEqual(1,"number of groups should be one");
+        expect(options.groups[0].width).toEqual(options.groups[0].height);
 
-        done();
-      });
-    });
-
-    it('should return square canvas', function (done) {
-      var options = {square: false, powerOfTwo: false};
-      generator.determineCanvasSize(FILES, options, function (err) {
-        expect(err).to.be(null);
-        expect(options.width).not.to.equal(options.height);
         done();
       });
     });
@@ -64,13 +55,42 @@ describe('generator', function () {
     it('should return power of two', function (done) {
       var options = {square: false, powerOfTwo: true};
       generator.determineCanvasSize(FILES, options, function (err) {
-        expect(err).to.be(null);
-        expect(options.width).to.equal(1024);
-        expect(options.height).to.equal(512);
+        expect(err).toBe(null);
+        expect(options.groups.length).toEqual(1, "number of groups should be one");
+        expect(options.groups[0].width).toEqual(1024);
+        expect(options.groups[0].height).toEqual(512);
         done();
       });
     });
 
+    it('should create multiple texture groups', function (done) {
+      var options = {square: false, powerOfTwo: false, width:500, height:500};
+      generator.determineCanvasSize(FILES, options, function (err) {
+        expect(err).toBe(null);
+        expect(options.groups.length).toBeMoreThan(1);
+        // TODO check json and image created for each group
+        done();
+      });
+    });
+
+    it('should create limit texture groups', function (done) {
+      var options = {square: false, powerOfTwo: false, width:500, height:500, maxGroups:1};
+      generator.determineCanvasSize(FILES, options, function (err) {
+        expect(err).toBe(null);
+        expect(options.groups.length).toEqual(1);
+        expect(options.excludedFiles.length).toBeMoreThan(0);
+        done();
+      });
+    });
+
+    after(function(){
+      try {
+        for (var i = 1; i <= 4; i++) {
+          fs.unlinkSync(__dirname + '/test-'+i+'.png');
+          fs.unlinkSync(__dirname + '/test-'+i+'.json');
+        }
+      } catch(e){ }
+    });
   });
 
   describe('generateImage', function () {
@@ -84,13 +104,13 @@ describe('generator', function () {
     it('should generate image file', function (done) {
       var options = {width: 100, height: 100, path: __dirname + '/', name: 'test', padding: 0};
       generator.generateImage(FILES, options, function (err) {
-        expect(err).to.be(null);
-        expect(fs.existsSync(__dirname + '/test.png')).to.be.ok();
+        expect(err).toBe(null);
+        expect(fs.existsSync(__dirname + '/test.png')).toExist();
         done();
       });
     });
 
-    after(function () {
+    after(function(){
       fs.unlinkSync(__dirname + '/test.png');
     });
   });
@@ -106,13 +126,13 @@ describe('generator', function () {
     it('should generate data file', function (done) {
       var options = {path: __dirname + '/', name: 'test', format: {extension: 'json', template: 'json.template', padding: 0}};
       generator.generateData(FILES, options, function (err) {
-        expect(err).to.be(null);
-        expect(fs.existsSync(__dirname + '/test.json')).to.be.ok();
+        expect(err).toBe(null);
+        expect(fs.existsSync(__dirname + '/test.json')).toExist();
         done();
       });
     });
 
-    after(function () {
+    after(function(){
       fs.unlinkSync(__dirname + '/test.json');
     });
   });

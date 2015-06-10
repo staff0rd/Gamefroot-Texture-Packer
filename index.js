@@ -150,7 +150,6 @@ function generate(files, options, callback) {
   options.sort = options.hasOwnProperty('sort') ? options.sort : 'maxside';
   options.padding = options.hasOwnProperty('padding') ? parseInt(options.padding, 10) : 0;
   options.prefix = options.hasOwnProperty('prefix') ? options.prefix : '';
-  options.maxGroups = options.hasOwnProperty('maxGroups') ? options.maxGroups : -1;
 
   files = files.map(function (item, index) {
     var resolvedItem = path.resolve(item);

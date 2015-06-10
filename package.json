@@ -18,8 +18,8 @@
     "optimist": "~0.6.0"
   },
   "devDependencies": {
-    "mocha": "*",
-    "expect.js": "~0.2.0"
+    "expect": "^1.6.0",
+    "mocha": "*"
   },
   "scripts": {
     "test": "mocha test"
