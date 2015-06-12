@@ -201,9 +201,12 @@ function generate(files, options, callback) {
       groupFiles = Array.isArray(groupFiles) ? groupFiles : glob.sync(groupFiles);
       var groupItems = [];
       groupFiles.forEach(function(item){
+        var groupId = options.groups.length;
         var resolvedItem = path.resolve(item);
         if (fileHash.hasOwnProperty(resolvedItem)) {
-          groupItems.push(resolvedItem);
+          var fileInfo = fileHash[resolvedItem];
+          fileInfo.group = groupId;
+          groupItems.push(fileInfo);
         }
       });
       options.groups.push(groupItems);

@@ -83,22 +83,20 @@ describe('generator', function () {
       });
     });
 
-    it('should group images together that have the same group specified', function(done){
-      var options = {width:500, height:500, group:['/fixtures/*']};
-      generator.determineCanvasSize(FILES, options, function (err){
-        expect(err).toBe(null);
-        // Because the files must be grouped together and can not 
-        expect(options.atlases.length).toEqual(0);
-        expect(options.excludedFiles.length).toBeMoreThan(0);
-        done();
-      });
-    });
+    var FILES_GROUPED = [
+      {path: __dirname + '/fixtures/500x500.jpg', width: 500, height: 500, group:0},
+      {path: __dirname + '/fixtures/200x200.jpg', width: 200, height: 200, group:0},
+      {path: __dirname + '/fixtures/100x100.jpg', width: 100, height: 100, group:0},
+      {path: __dirname + '/fixtures/50x50.jpg', width: 50, height: 50, group:0}
+    ];
 
-    it('should should handle multiple groups specified', function(done){
-      var options = { group:['/fixtures/50x50.jpg','/fixtures/100x100.jpg','/fixtures/200x200.jpg','/fixtures/500x500.jpg'] };
-      generator.determineCanvasSize(FILES, options, function (err){
+    it('should group images together that have the same group specified', function(done){
+      var options = {width:500, height:500};
+      generator.determineCanvasSize(FILES_GROUPED, options, function (err){
         expect(err).toBe(null);
-        expect(options.atlases.length).toEqual(4);
+        // Because the files must be grouped together and can not all fit
+        expect(options.atlases.length).toEqual(1);
+        expect(options.excludedFiles.length).toBeMoreThan(0);
         done();
       });
     });
