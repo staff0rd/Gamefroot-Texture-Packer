@@ -106,8 +106,12 @@ if (!module.parent) {
       default: 0
     })
     .options('gutter', {
-      describe: 'the number of pixels to bleed the image edge, gutter is added to padding value.',
+      describe: 'the number of pixels to bleed the image edge, gutter is added to padding value',
       default: 0
+    })
+    .options('group', {
+      describe: 'allows you to specify a group of assets that must be included in the same atlas, make sure to use quotes around file paths',
+      default: []
     })
     .demand(1)
     .argv;
@@ -171,6 +175,7 @@ function generate(files, options, callback) {
   options.maxAtlases = options.hasOwnProperty('maxAtlases') ? options.maxAtlases : 0;
   options.gutter = options.hasOwnProperty('gutter') ? parseInt(options.gutter, 10) : 0;
 
+  var fileHash = {};
   files = files.map(function (item, index) {
     var resolvedItem = path.resolve(item);
     var name = "";
@@ -180,14 +185,30 @@ function generate(files, options, callback) {
     else {
       name = options.prefix + resolvedItem.substring(resolvedItem.lastIndexOf(path.sep) + 1, resolvedItem.lastIndexOf('.'));
     }
-    return {
+    fileHash[resolvedItem] = {
       index: index,
       path: resolvedItem,
       name: name,
       extension: path.extname(resolvedItem)
     };
+    return fileHash[resolvedItem];
   });
 
+  if (options.group){
+    options.group = Array.isArray(options.group) ? options.group : [options.group];
+    options.groups = [];
+    options.group.forEach(function(groupFiles){
+      groupFiles = Array.isArray(groupFiles) ? groupFiles : glob.sync(groupFiles);
+      var groupItems = [];
+      groupFiles.forEach(function(item){
+        var resolvedItem = path.resolve(item);
+        if (fileHash.hasOwnProperty(resolvedItem)) {
+          groupItems.push(resolvedItem);
+        }
+      });
+      options.groups.push(groupItems);
+    });
+  }
 
   if (!fs.existsSync(options.path) && options.path !== '') fs.mkdirSync(options.path);
 
