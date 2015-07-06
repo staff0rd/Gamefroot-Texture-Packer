@@ -95,7 +95,7 @@ describe('generator', function () {
       generator.determineCanvasSize(FILES_GROUPED, options, function (err){
         expect(err).toBe(null);
         // Because the files must be grouped together and can not all fit
-        expect(options.atlases.length).toEqual(1);
+        expect(options.atlases.length).toEqual(0);
         expect(options.excludedFiles.length).toBeMoreThan(0);
         done();
       });
