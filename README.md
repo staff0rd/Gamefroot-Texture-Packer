@@ -2,7 +2,6 @@ Gamefroot Texture Packer
 ==============
 
 [![Build Status](https://travis-ci.org/Gamefroot/Gamefroot-Texture-Packer.svg?branch=kiwi)](https://travis-ci.org/Gamefroot/Gamefroot-Texture-Packer)
-[![Coverage Status](https://coveralls.io/repos/Gamefroot/Gamefroot-Texture-Packer/badge.svg?branch=master&service=github)](https://coveralls.io/github/Gamefroot/Gamefroot-Texture-Packer?branch=master)
 
 Generate high quality texture atlases in Node.js, developed for [Gamefroot.com](http://gamefroot.com) and [Kiwi.js](http://www.kiwijs.org/). 
 
