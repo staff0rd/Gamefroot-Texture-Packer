@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Gamefroot/Gamefroot-Texture-Packer.svg?branch=kiwi)](https://travis-ci.org/Gamefroot/Gamefroot-Texture-Packer)
+
 Gamefroot Texture Packer
 ==============
 
