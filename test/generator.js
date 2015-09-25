@@ -33,6 +33,34 @@ describe('generator', function () {
     });
   });
 
+  describe('resizeImages', function (){
+    it('should resize images', function ( done ) {
+      var FILES = [
+        {path: __dirname + '/fixtures/50x50.jpg', width: 50, height: 50},
+        {path: __dirname + '/fixtures/100x100.jpg', width: 100, height: 100},
+        {path: __dirname + '/fixtures/200x200.jpg', width: 200, height: 200},
+        {path: __dirname + '/fixtures/500x500.jpg', width: 500, height: 500}
+      ];
+      
+      var testWidth = 50;
+      var testHeight = 50;
+      generator.resizeImages(FILES, { resizeWidth:50, resizeHeight:50 }, function ( err, files ){
+        expect(err).toBe(null);
+
+        generator.getImagesSizes( files, {padding: 0}, function ( err, files ) {
+          expect(err).toBe(null);
+
+          files.forEach( function( file, i ) {
+            expect(file.width).toEqual( testWidth );
+            expect(file.height).toEqual( testHeight );
+          });
+
+          done();
+        });
+      });
+    });
+  });
+
   describe('determineCanvasSize', function () {
     var FILES = [
       {path: __dirname + '/fixtures/500x500.jpg', width: 500, height: 500},

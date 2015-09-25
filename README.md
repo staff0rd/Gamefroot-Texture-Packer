@@ -1,6 +1,8 @@
 Gamefroot Texture Packer
 ==============
 
+[![Build Status](https://travis-ci.org/Gamefroot/Gamefroot-Texture-Packer.svg?branch=kiwi)](https://travis-ci.org/Gamefroot/Gamefroot-Texture-Packer)
+
 Generate high quality texture atlases in Node.js, developed for [Gamefroot.com](http://gamefroot.com) and [Kiwi.js](http://www.kiwijs.org/). 
 
 ###Features###
@@ -50,6 +52,8 @@ Generate high quality texture atlases in Node.js, developed for [Gamefroot.com](
       --maxAtlases          maximum number of texture atlases that will be outputted                                                                    [default: 0]
       --gutter              the number of pixels to bleed the image edge, gutter is added to padding value                                              [default: 0]
       --group               allows you to specify a group of assets that must be included in the same atlas, make sure to use quotes around file paths  [default: []]
+      --resizeWidth         resizes all source images to a specific width                                                                               [default: 0]
+      --resizeHeight        resizes all source images to a specific height                                                                              [default: 0]
     ```
 2. **Node.js**
     ```javascript

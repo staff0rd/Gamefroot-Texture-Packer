@@ -113,6 +113,14 @@ if (!module.parent) {
       describe: 'allows you to specify a group of assets that must be included in the same atlas, make sure to use quotes around file paths',
       default: []
     })
+    .options('resizeWidth', {
+      describe: 'resizes all source images to a specific width',
+      default: 0
+    })
+    .options('resizeHeight', {
+      describe: 'resizes all source images to a specific height',
+      default: 0
+    })
     .demand(1)
     .argv;
 
@@ -174,6 +182,8 @@ function generate(files, options, callback) {
   options.prefix = options.hasOwnProperty('prefix') ? options.prefix : '';
   options.maxAtlases = options.hasOwnProperty('maxAtlases') ? options.maxAtlases : 0;
   options.gutter = options.hasOwnProperty('gutter') ? parseInt(options.gutter, 10) : 0;
+  options.resizeWidth = options.hasOwnProperty('resizeWidth') ? parseInt(options.resizeWidth, 10) : 0;
+  options.resizeHeight = options.hasOwnProperty('resizeHeight') ? parseInt(options.resizeHeight, 10) : 0;
 
   var fileHash = {};
   files = files.map(function (item, index) {
@@ -220,6 +230,9 @@ function generate(files, options, callback) {
       generator.trimImages(files, options, callback);
     },
     function (callback) {
+      generator.resizeImages(files, options, callback);
+    },
+    function (files, callback) {
       generator.getImagesSizes(files, options, callback);
     },
     function (files, callback) {
